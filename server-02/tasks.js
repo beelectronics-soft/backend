@@ -94,10 +94,10 @@ const checkLogin = async (user) => {
             if (json.passUser === user.passUser) {
                 return  { status: true, user: json };
             } else {
-                return { status: false };
+                return { status: false, message: "Wrong password" };
             }
         } else {
-            return { status: false };
+            return { status: false, message: "Wrong username" };
         }
     } catch (err) {
         return err;

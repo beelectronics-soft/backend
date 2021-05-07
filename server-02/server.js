@@ -45,7 +45,14 @@ io.on("connection", socket => {
         if (user.imgUser === null) {
             user.imgUser = defaultUserImg;
         }
-        var res = await updateUser(user);
+
+        var isNewUserName = checkDupUser(user);
+        if (isNewUserName) {
+            var res = await updateUser(user);
+            socket.emit('updateUser', res);
+        }
+
+        var res = { status: false, message: "User already exists" }
         socket.emit('updateUser', res);
     });
 

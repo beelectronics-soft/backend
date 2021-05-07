@@ -183,7 +183,7 @@ const addRecords = async (idUser, cart) => {
             var record = {
                 idUser: idUser,
                 nameProduct: productJSON.nameProduct, 
-                priceProduct: productJSON.priceProduct, 
+                priceProduct: cart[i].price, 
                 qtyProduct: cart[i].qty, 
             }
             
