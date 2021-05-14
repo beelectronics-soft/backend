@@ -208,11 +208,56 @@ const getRecords = async (idUser) => {
     }
 }
 
+const beginTrans =  async () => {
+    try {
+        const res1 = await request.post(`${ENDPOINT}/trans`);
+        if (res1 === true) {
+            const res2 = await request.post(`http://26.142.66.43:8080/trans`);
+            return res2;
+        } else {
+            return res1;
+        }
+    } catch (err) {
+        return err;
+    }
+}
+
+const commitTrans =  async () => {
+    try {
+        const res1 = await request.post(`${ENDPOINT}/commit`);
+        if (res1 === true) {
+            const res2 = await request.post(`http://26.142.66.43:8080/commit`);
+            return res2;
+        } else {
+            return res1;
+        }
+    } catch (err) {
+        return err;
+    }
+}
+
+const rollbackTrans =  async () => {
+    try {
+        const res1 = await request.post(`${ENDPOINT}/rollback`);
+        if (res1 === true) {
+            const res2 = await request.post(`http://26.142.66.43:8080/rollback`);
+            return res2;
+        } else {
+            return res1;
+        }
+    } catch (err) {
+        return err;
+    }
+}
+
 module.exports = {
     calcTotalPrice,
     checkPayStatus,
     updateStock,
     updateAccount, 
     addRecords, 
-    getRecords
+    getRecords, 
+    beginTrans, 
+    commitTrans, 
+    rollbackTrans
 }

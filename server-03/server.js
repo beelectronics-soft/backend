@@ -19,6 +19,10 @@ const { checkPayStatus } = require('./tasks');
 const { addRecords } = require('./tasks');
 const { getRecords } = require('./tasks');
 
+const { beginTrans } = require('./tasks');
+const { commitTrans } = require('./tasks');
+const { rollbackTrans } = require('./tasks');
+
 io.on("connection", socket => {
 
     socket.on("checkPayStatus", async ( account, cart ) => {
@@ -31,22 +35,26 @@ io.on("connection", socket => {
     });
 
     socket.on('buyProducts', async (idUser, account, cart) => {
+        await beginTrans();
         var total = await calcTotalPrice(cart);
-        console.log(total);
         var check01 = await updateAccount(account.id, total);
-        if (check01) {
-            var check02 = await updateStock(cart);
-            if (check02) {
+        if (check01 == true) {
+            var check02 = await updateStock(cart);  
+            if (check02 == true) {
                 var check03 = await addRecords(idUser, cart);
-                if (check03) {
+                if (check03 == true) {
+                    await commitTrans();
                     socket.emit("buyProducts", true);
                 } else {
+                    await rollbackTrans();
                     socket.emit("buyProducts", false);
                 }
             } else {
+                await rollbackTrans();
                 socket.emit("buyProducts", false);
             }
         } else {
+            await rollbackTrans();
             socket.emit("buyProducts", false);
         }
     });

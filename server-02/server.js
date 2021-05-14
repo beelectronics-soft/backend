@@ -79,6 +79,8 @@ io.on("connection", socket => {
             var res = await addUser(user);
             if (res === true) {
                 var newUser = await getUserByName(user.nameUser);
+                newUser.statusUser = 1;
+                await updateUser(newUser)
                 socket.emit('signUp', { status: true, user: newUser });
             }   
         } else {
@@ -107,6 +109,11 @@ io.on("connection", socket => {
     // TASK 06
     socket.on('checkLogin', async (user) => {
         var res = await checkLogin(user);
+        if (res.status === true) {
+            var newUser = res.user;
+            newUser.statusUser = 1;
+            await updateUser(newUser);
+        }
         socket.emit("checkLogin", res); 
     });
 

@@ -92,7 +92,11 @@ const checkLogin = async (user) => {
         var json = JSON.parse(res);
         if (json.idUser) {
             if (json.passUser === user.passUser) {
-                return  { status: true, user: json };
+                if (json.statusUser === 0) {
+                    return  { status: true, user: json };
+                } else {
+                    return  { status: false, message: "User is currently online" };
+                }
             } else {
                 return { status: false, message: "Wrong password" };
             }
@@ -110,7 +114,7 @@ const checkDupUser = async (user) => {
     var usersJson = JSON.parse(users);
     var isNewUserName = true;
     for (var i = 0; i < usersJson.length; i++) {
-        if (usersJson[i].nameUser === user.nameUser) {
+        if (usersJson[i].nameUser === user.nameUser && usersJson[i].idUser !== user.idUser) {
             isNewUserName = false;
             break;
         }
