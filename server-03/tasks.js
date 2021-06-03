@@ -1,12 +1,12 @@
 const request = require("request-promise");
-const ENDPOINT = "http://26.142.66.43:8081"
+const {middlewareURL, server1URL, externalURL} = require("../env");
 
 // Call TASK 01.07 (Server 01)
 const updateProduct = async (product) => {
     try {
         const options = {
             method: "PUT",
-            uri: `http://26.142.66.43:4000/update`,
+            uri: `${server1URL}/update`,
             body: product,
             json: true
         };
@@ -22,7 +22,7 @@ const updateProduct = async (product) => {
 // Call to TASK 09 (in Server 01)
 const isInStock = async (id) => {
     try {
-        const res = await request.get(`http://26.142.66.43:4000/instock/${id}`);
+        const res = await request.get(`${server1URL}/instock/${id}`);
         return res;
     } catch (err) {
         return err;
@@ -34,7 +34,7 @@ const calcTotalPrice = async (cart) => {
     try {
         const options = {
             method: "GET",
-            uri: `http://26.142.66.43:4000/totalprice`,
+            uri: `${server1URL}/totalprice`,
             body: cart,
             json: true
         };
@@ -49,7 +49,7 @@ const calcTotalPrice = async (cart) => {
 // Call to TASK 01.01 (in server 01)
 const getProduct = async (id) => {
     try {
-        const res = await request.get(`http://26.142.66.43:4000/product/${id}`);
+        const res = await request.get(`${server1URL}/product/${id}`);
         return res;
     } catch (err) {
         return err;
@@ -58,7 +58,7 @@ const getProduct = async (id) => {
 
 const getCategoryByName = async (nameCategory) => {
     try {
-        const res = await request.get(`${ENDPOINT}/category/name/${nameCategory}`);
+        const res = await request.get(`${middlewareURL}/category/name/${nameCategory}`);
         return res;
     } catch (err) {
         return err;
@@ -88,7 +88,7 @@ const checkCartStock = async (cart) => {
 // EXTERNAL TASK (11)
 const checkAccount = async (id, money) => {
     try {
-        const res = await request.get(`http://26.142.66.43:8080/account/${id}/${money}`);
+        const res = await request.get(`${externalURL}/account/${id}/${money}`);
         return res;
     } catch (err) {
         return err;
@@ -99,7 +99,7 @@ const updateAccount = async (id, money) => {
     try {
         const options = {
             method: "PUT",
-            uri: `http://26.142.66.43:8080/accounts`,
+            uri: `${externalURL}/accounts`,
             body: { id, money },
             json: true
         };
@@ -147,7 +147,7 @@ const getCartProducts = async (cart) => {
     try {
         const options = {
             method: "GET",
-            uri: `http://26.142.66.43:4000/cartproducts`,
+            uri: `${server1URL}/cartproducts`,
             body: cart,
             json: true
         };
@@ -163,7 +163,7 @@ const addRecord = async (record) => {
     try {
         const options = {
             method: "POST",
-            uri: `${ENDPOINT}/records`,
+            uri: `${middlewareURL}/records`,
             body: record,
             json: true
         };
@@ -201,7 +201,7 @@ const addRecords = async (idUser, cart) => {
 
 const getRecords = async (idUser) => {
     try {
-        const res = await request.get(`${ENDPOINT}/records/${idUser}`);
+        const res = await request.get(`${middlewareURL}/records/${idUser}`);
         return res;
     } catch (err) {
         return err;
@@ -210,9 +210,9 @@ const getRecords = async (idUser) => {
 
 const beginTrans =  async () => {
     try {
-        const res1 = await request.post(`${ENDPOINT}/trans`);
+        const res1 = await request.post(`${middlewareURL}/trans`);
         if (res1 === true) {
-            const res2 = await request.post(`http://26.142.66.43:8080/trans`);
+            const res2 = await request.post(`${externalURL}/trans`);
             return res2;
         } else {
             return res1;
@@ -224,9 +224,9 @@ const beginTrans =  async () => {
 
 const commitTrans =  async () => {
     try {
-        const res1 = await request.post(`${ENDPOINT}/commit`);
+        const res1 = await request.post(`${middlewareURL}/commit`);
         if (res1 === true) {
-            const res2 = await request.post(`http://26.142.66.43:8080/commit`);
+            const res2 = await request.post(`${externalURL}/commit`);
             return res2;
         } else {
             return res1;
@@ -238,9 +238,9 @@ const commitTrans =  async () => {
 
 const rollbackTrans =  async () => {
     try {
-        const res1 = await request.post(`${ENDPOINT}/rollback`);
+        const res1 = await request.post(`${middlewareURL}/rollback`);
         if (res1 === true) {
-            const res2 = await request.post(`http://26.142.66.43:8080/rollback`);
+            const res2 = await request.post(`${externalURL}/rollback`);
             return res2;
         } else {
             return res1;

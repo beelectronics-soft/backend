@@ -1,10 +1,10 @@
 const request = require("request-promise");
-const ENDPOINT = "http://26.142.66.43:8081"
+const {middlewareURL} = require("../env");
 
 // TASK 05.01
 const getUserByName = async (nameUser) => {
     try {
-        const res = await request.get(`${ENDPOINT}/user/name/${nameUser}`);
+        const res = await request.get(`${middlewareURL}/user/name/${nameUser}`);
         return res;
     } catch (err) {
         return err;
@@ -14,7 +14,7 @@ const getUserByName = async (nameUser) => {
 // TASK 05.02
 const getUsers = async () => {
     try {
-        const res = await request.get(`${ENDPOINT}/users`);
+        const res = await request.get(`${middlewareURL}/users`);
         return res;
     } catch (err) {
         return err;
@@ -26,7 +26,7 @@ const updateUser = async (user) => {
     try {
         const options = {
             method: "PUT",
-            uri: `${ENDPOINT}/users`,
+            uri: `${middlewareURL}/users`,
             body: user,
             json: true
         };
@@ -43,7 +43,7 @@ const addUser = async (user) => {
     try {
         const options = {
             method: "POST",
-            uri: `${ENDPOINT}/users`,
+            uri: `${middlewareURL}/users`,
             body: user,
             json: true
         };
@@ -58,7 +58,7 @@ const addUser = async (user) => {
 // TASK 05.05
 const deleteUser = async (id) => {
     try {
-        const res = await request.delete(`${ENDPOINT}/user/${id}`);
+        const res = await request.delete(`${middlewareURL}/user/${id}`);
         return res;
     } catch (err) {
         return err;
@@ -68,7 +68,7 @@ const deleteUser = async (id) => {
 // TASK 05.06
 const getUser = async (id) => {
     try {
-        const res = await request.get(`${ENDPOINT}/user/${id}`);
+        const res = await request.get(`${middlewareURL}/user/${id}`);
         return res;
     } catch (err) {
         return err;
@@ -78,7 +78,7 @@ const getUser = async (id) => {
 // TASK 05.07
 const getStorers = async () => {
     try {
-        const res = await request.get(`${ENDPOINT}/storers`);
+        const res = await request.get(`${middlewareURL}/storers`);
         return res;
     } catch (err) {
         return err;

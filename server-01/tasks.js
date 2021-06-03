@@ -1,10 +1,10 @@
 const request = require("request-promise");
-const ENDPOINT = "http://26.142.66.43:8081"
+const {middlewareURL} = require("../env");
 
 // TASK 01.01
 const getProduct = async (id) => {
     try {
-        const res = await request.get(`${ENDPOINT}/product/${id}`);
+        const res = await request.get(`${middlewareURL}/product/${id}`);
         return res;
     } catch (err) {
         return err;
@@ -14,7 +14,7 @@ const getProduct = async (id) => {
 // TASK 01.02
 const getProducts = async () => {
     try {
-        const res = await request.get(`${ENDPOINT}/products`);
+        const res = await request.get(`${middlewareURL}/products`);
         return res;
     } catch (err) {
         return err;
@@ -39,7 +39,7 @@ const getCartProducts = async (cart) => {
 // TASK 01.04
 const deleteProduct = async (id) => {
     try {
-        const res = await request.delete(`${ENDPOINT}/product/${id}`);
+        const res = await request.delete(`${middlewareURL}/product/${id}`);
         return res;
     } catch (err) {
         return err;
@@ -51,7 +51,7 @@ const addProduct = async (product) => {
     try {
         const options = {
             method: "POST",
-            uri: `${ENDPOINT}/products`, 
+            uri: `${middlewareURL}/products`, 
             body: product, 
             json: true
         };
@@ -66,7 +66,7 @@ const addProduct = async (product) => {
 // TASK 01.06
 const getCategories = async () => {
     try {
-        const res = await request.get(`${ENDPOINT}/categories`);
+        const res = await request.get(`${middlewareURL}/categories`);
         return res;
     } catch (err) {
         return err;
@@ -79,7 +79,7 @@ const updateProduct = async (product) => {
         console.log(product);
         const options = {
             method: "PUT",
-            uri: `${ENDPOINT}/products`,
+            uri: `${middlewareURL}/products`,
             body: product,
             json: true
         };

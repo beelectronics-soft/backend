@@ -77,10 +77,11 @@ app.get("/product/:id", async (req, res, next) => {
     next();
 })
 
+const {clientURL} = require ("../env");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
     cors: {
-        origin: "http://26.142.66.43:3000",
+        origin: clientURL,
         allowedHeaders: ["Access-Control-Allow-Origin"],
         credentials: false
     }
@@ -188,5 +189,3 @@ io.on("connection", socket => {
 http.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-
-//This is a test to see if commit works

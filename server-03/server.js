@@ -3,10 +3,11 @@ const PORT = 4002;
 
 const app = express();
 
+const {clientURL} = require ("../env");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
     cors: {
-        origin: "http://26.142.66.43:3000",
+        origin: clientURL,
         allowedHeaders: ["Access-Control-Allow-Origin"],
         credentials: false
     }
