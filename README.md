@@ -1,5 +1,5 @@
 # Server tasks
-Beelectronics ecommerce system middleware module: It is in charge of processing user requests when interacting with the client and the responses to queries made by the Middleware. Its tasks are distributed in 3 servers:
+Beelectronics ecommerce system backend module: It is in charge of processing user requests when interacting with the client and the responses to queries made by the Middleware. Its tasks are distributed in 3 servers:
 
 ## Server 01
 1. TASK 01: CRUD Products
